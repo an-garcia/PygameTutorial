@@ -12,44 +12,47 @@ class Worm:
         self.surface = surface
         self.x = x
         self.y = y
+        self.dx = 0
+        self.dy = -1
         self.length = length
-        self.dir_x = 0
-        self.dir_y = -1
         self.body = []
+        self.last = (0, 0)
         self.crashed = False
 
     def key_event(self, event):
         """ Handle key events that affect the worm. """
         if event.key == pygame.K_UP:
-            self.dir_x = 0
-            self.dir_y = -1
+            self.dx = 0
+            self.dy = -1
         elif event.key == pygame.K_DOWN:
-            self.dir_x = 0
-            self.dir_y = 1
+            self.dx = 0
+            self.dy = 1
         elif event.key == pygame.K_LEFT:
-            self.dir_x = -1
-            self.dir_y = 0
+            self.dx = -1
+            self.dy = 0
         elif event.key == pygame.K_RIGHT:
-            self.dir_x = 1
-            self.dir_y = 0
+            self.dx = 1
+            self.dy = 0
 
     def move(self):
         """ Move the worm. """
-        self.x += self.dir_x
-        self.y += self.dir_y
+        self.body.insert(0, (self.x, self.y))
+        self.x += self.dx
+        self.y += self.dy
 
         r, g, b, a = self.surface.get_at((self.x, self.y))
         if (r, g, b) != (0, 0, 0):
             self.crashed = True
-            
-        self.body.insert(0, (self.x, self.y))
-        if len(self.body) > self.length:
-            self.body.pop()
+        
+        if len(self.body) >= self.length:
+            self.last = self.body.pop()
+        else:
+            self.last = self.body[-1]
   
     def draw(self):
         """ Draw the worm. """
-        for x, y in self.body:
-            self.surface.set_at((x, y), (255, 255, 255))
+        self.surface.set_at((self.x, self.y), (255, 255, 255))
+        self.surface.set_at(self.last, (0, 0, 0))
 
 
 # Draws a worm
@@ -59,6 +62,9 @@ def worm_game01():
     height = 400
 
     screen = pygame.display.set_mode((width, height))
+    screen.fill((0, 0, 0))
+    pygame.display.flip()
+
     clock = pygame.time.Clock()
     running = True
  
@@ -66,7 +72,6 @@ def worm_game01():
     w = Worm(screen, int(width/2), int(height/2), 200)
 
     while running:
-        screen.fill((0, 0, 0))
         w.move()
         w.draw()
 
