@@ -37,13 +37,17 @@ class Worm:
         """ Move the worm. """
         self.x += self.dir_x
         self.y += self.dir_y
-        if (self.x, self.y) in self.body:
+
+        r, g, b, a = self.surface.get_at((self.x, self.y))
+        if (r, g, b) != (0, 0, 0):
             self.crashed = True
+            
         self.body.insert(0, (self.x, self.y))
         if len(self.body) > self.length:
             self.body.pop()
   
     def draw(self):
+        """ Draw the worm. """
         for x, y in self.body:
             self.surface.set_at((x, y), (255, 255, 255))
 
@@ -67,7 +71,7 @@ def worm_game01():
         w.draw()
 
         if w.crashed or w.x <= 0 or w.x >= width-1 or w.y <= 0 or w.y >= height-1:
-            print ("Crash!")
+            print ("Crash!!!")
             running = False
 
         for event in pygame.event.get():
