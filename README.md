@@ -1,7 +1,10 @@
 Pygame Tutorial
 ===============
 
-Python Pygame sample scripts for pygame concepts.
+Python Pygame game based on Based on [pygame-tutorial](https://lorenzod8n.wordpress.com/category/pygame-tutorial/). 
+You control a worm that move around the screen looking for food. 
+When the worm gets the food, you get some points and the worms grows longer. 
+Crashing onto yourself or the borders ends the game.
 
 
 Pre-requisites
@@ -28,6 +31,10 @@ For Windows 10 - 64 bits:
     import pygame.examples.aliens as game
     game.main()	
 ```
+
+### Running the game
+In the terminal run
+``` python WormGame.py ```
 
 
 
