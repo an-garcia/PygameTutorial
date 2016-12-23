@@ -1,6 +1,8 @@
 Pygame Tutorial
 ===============
 
+![alt tag](https://github.com/an-garcia/PygameTutorial/blob/master/WormGame.png)
+
 Python Pygame game based on Based on [pygame-tutorial](https://lorenzod8n.wordpress.com/category/pygame-tutorial/). 
 You control a worm that move around the screen looking for food. 
 When the worm gets the food, you get some points and the worms grows longer. 

@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-# Source https://lorenzod8n.wordpress.com/2008/02/27/pygame-tutorial-8-the-worm-game/
+# Source https://lorenzod8n.wordpress.com/2008/03/01/pygame-tutorial-9-first-improvements-to-the-game/
 # Draws a worm on screen that moves with direction keys.
 
 import pygame
@@ -30,12 +30,15 @@ class Worm:
             self.vx = 0
             self.vy = -1
         elif event.key == pygame.K_DOWN:
+            if self.vy == -1: return
             self.vx = 0
             self.vy = 1
         elif event.key == pygame.K_LEFT:
+            if self.vx == 1: return
             self.vx = -1
             self.vy = 0
         elif event.key == pygame.K_RIGHT:
+            if self.vx == -1: return
             self.vx = 1
             self.vy = 0
 
@@ -56,11 +59,13 @@ class Worm:
             self.body.pop()
  
     def draw(self):
-        for x, y in self.body:
-            self.surface.set_at((x, y), self.color)
+        #for x, y in self.body:
+        #    self.surface.set_at((x, y), self.color)
+        x, y = self.body[0]
+        self.surface.set_at((x, y), self.color)
+        x, y = self.body[-1]
+        self.surface.set_at((x, y), (0, 0, 0))
 
-    def position(self):
-        return self.x, self.y
 
 
 class Food:
@@ -71,10 +76,19 @@ class Food:
         self.color = 255, 255, 255
  
     def draw(self):
-        self.surface.set_at((self.x, self.y), self.color)
+        pygame.draw.rect(self.surface, self.color, (self.x, self.y, 3, 3), 0)
 
-    def position(self):
-        return self.x, self.y
+    def erase(self):
+        pygame.draw.rect(self.surface, (0, 0, 0), (self.x, self.y, 3, 3), 0)
+
+    def check(self, x, y):
+        if x < self.x or x > self.x + 3:
+            return False
+        elif y < self.y or y > self.y + 3:
+            return False
+        else:
+            return True
+
 
 
 # Draws a worm
@@ -85,13 +99,16 @@ def worm_game():
     screen = pygame.display.set_mode((w, h))
     clock = pygame.time.Clock()
 
+    pygame.mixer.init()
+    chomp = pygame.mixer.Sound("croc_chomp_x.wav")
+
     score = 0
     worm = Worm(screen)
     food = Food(screen)
     running = True
  
     while running:
-        screen.fill((0, 0, 0))
+        #screen.fill((0, 0, 0))
         worm.move()
         worm.draw()
         food.draw()
@@ -102,10 +119,12 @@ def worm_game():
             running = False
         elif worm.y <= 0 or worm.y >= h - 1:
             running = False
-        elif worm.position() == food.position():
+        elif food.check(worm.x, worm.y):
             score += 1
             worm.eat()
+            chomp.play()
             print ("Score: ", score)
+            food.erase()
             food = Food(screen)
     
         for event in pygame.event.get():
