@@ -101,6 +101,7 @@ def worm_game():
 
     pygame.mixer.init()
     chomp = pygame.mixer.Sound("croc_chomp_x.wav")
+    pygame.display.set_caption("Worm Game")
 
     score = 0
     worm = Worm(screen)
