@@ -1,7 +1,6 @@
 Pygame Tutorial
 ===============
 
-![alt tag](https://github.com/an-garcia/PygameTutorial/blob/master/WormGame.png)
 ![Scheme](WormGame.png)
 
 Python Pygame game based on Based on [pygame-tutorial](https://lorenzod8n.wordpress.com/category/pygame-tutorial/). 
