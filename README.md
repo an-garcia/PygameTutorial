@@ -2,6 +2,7 @@ Pygame Tutorial
 ===============
 
 ![alt tag](https://github.com/an-garcia/PygameTutorial/blob/master/WormGame.png)
+![Scheme](WormGame.png)
 
 Python Pygame game based on Based on [pygame-tutorial](https://lorenzod8n.wordpress.com/category/pygame-tutorial/). 
 You control a worm that move around the screen looking for food. 
@@ -58,4 +59,3 @@ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
 WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
 License for the specific language governing permissions and limitations under
 the License.
-
